@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KnoMe — Health · Learning · Sovereign Data</title>
+  <meta name="description" content="KnoMe is patent-pending sovereign data infrastructure for health, education, and work. Family-owned SOLID pods. Cryptographic consent. The data serves the person. By design. By patent.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --purple-deep:   #2D1B69;
+      --purple-dark:   #3B1F6E;
+      --purple-mid:    #6B4FA0;
+      --purple-light:  #E8E0F5;
+      --purple-pale:   var(--purple-pale);
+      --gold:          #D4A843;
+      --gold-dark:     #A87D28;
+      --gold-light:    #FBF3E0;
+      --text-primary:  #1A1025;
+      --text-secondary:#4A3F5C;
+      --text-tertiary: #8A7FA0;
+      --border:        rgba(59,31,110,0.10);
+      --border-strong: rgba(59,31,110,0.18);
+      --bg:            #fff;
+      --bg-secondary:  #F7F4FC;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--text-primary);
+      background: var(--bg);
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem; height: 58px;
+      background: rgba(255,255,255,0.94);
+      backdrop-filter: blur(8px);
+      border-bottom: 0.5px solid var(--border);
+    }
+    .logo {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 22px; font-weight: 700; letter-spacing: -0.5px;
+      text-decoration: none; color: var(--text-primary);
+    }
+    .logo em { font-style: normal; color: var(--gold); }
+    .logo sub { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 400; color: var(--text-tertiary); vertical-align: baseline; }
+    .nav-links { display: flex; align-items: center; gap: 1.5rem; }
+    .nav-links a {
+      font-size: 13px; color: var(--text-secondary); text-decoration: none;
+    }
+    .nav-links a:hover { color: var(--text-primary); }
+    .btn-nav {
+      background: var(--purple-dark); color: #fff; border: none;
+      border-radius: var(--radius-sm); padding: 7px 16px;
+      font-size: 13px; font-weight: 500; cursor: pointer; text-decoration: none;
+      display: inline-block;
+    }
+    .btn-nav:hover { background: var(--purple-deep); }
+
+    /* ── Sections ── */
+    section { padding: 5rem 2rem; }
+    .container { max-width: 900px; margin: 0 auto; }
+    .eyebrow {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.9px;
+      text-transform: uppercase; color: var(--gold-dark);
+      margin-bottom: 0.6rem;
+    }
+    h2 {
+      font-size: 30px; font-weight: 600; line-height: 1.2;
+      letter-spacing: -0.5px; margin-bottom: 1rem;
+    }
+    .lead {
+      font-size: 16px; color: var(--text-secondary); max-width: 620px; line-height: 1.75;
+    }
+    hr { border: none; border-top: 0.5px solid var(--border); }
+
+    /* ── Hero ── */
+    .hero {
+      text-align: center; padding: 6rem 2rem 5rem;
+      background: var(--bg);
+    }
+    .hero-tagline {
+      font-size: 12px; font-weight: 600; letter-spacing: 2.5px;
+      text-transform: uppercase; color: var(--gold-dark);
+      margin-bottom: 1.75rem;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--gold-light); color: var(--gold-dark);
+      font-size: 12px; font-weight: 500; padding: 4px 14px;
+      border-radius: 20px; margin-bottom: 2rem;
+    }
+    .hero-badge::before {
+      content: ''; width: 6px; height: 6px;
+      border-radius: 50%; background: var(--gold-dark);
+      display: inline-block;
+    }
+    .hero h1 {
+      font-size: 50px; font-weight: 600; line-height: 1.1;
+      letter-spacing: -2px; margin-bottom: 1.5rem;
+      max-width: 780px; margin-inline: auto;
+    }
+    .hero h1 em { font-style: normal; color: var(--gold); }
+    .hero .lead { max-width: 520px; margin: 0 auto 2.5rem; font-size: 17px; }
+    .hero-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--purple-dark); color: #fff; border: none;
+      border-radius: var(--radius-sm); padding: 11px 22px;
+      font-size: 15px; font-weight: 500; cursor: pointer;
+      text-decoration: none; display: inline-block;
+    }
+    .btn-primary:hover { background: var(--purple-deep); }
+    .btn-secondary {
+      background: transparent; border: 0.5px solid var(--border-strong);
+      border-radius: var(--radius-sm); padding: 11px 22px;
+      font-size: 15px; color: var(--text-primary); cursor: pointer;
+      text-decoration: none; display: inline-block;
+    }
+    .btn-secondary:hover { background: var(--bg-secondary); }
+    .hero-domain {
+      font-size: 13px; color: var(--text-tertiary); margin-top: 1.75rem; font-style: italic;
+    }
+    .hero-domain strong { color: var(--purple-mid); font-weight: 500; }
+
+    /* ── Infrastructure diagram ── */
+    .infra-wrap {
+      border: 0.5px solid var(--border-strong);
+      border-radius: var(--radius-lg); overflow: hidden;
+      margin-top: 2.5rem;
+    }
+    .infra-top {
+      background: var(--purple-dark); padding: 1.5rem 2rem; text-align: center;
+    }
+    .infra-top-title { color: #fff; font-size: 16px; font-weight: 500; }
+    .infra-top-sub { color: rgba(255,255,255,0.6); font-size: 12px; margin-top: 4px; }
+    .infra-mid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      background: var(--bg);
+    }
+    .infra-layer {
+      padding: 1.1rem 1.25rem; text-align: center;
+      border-right: 0.5px solid var(--border);
+      border-bottom: 0.5px solid var(--border);
+    }
+    .infra-layer:last-child { border-right: none; }
+    .infra-layer-name { font-size: 12px; font-weight: 600; color: var(--purple-mid); }
+    .infra-layer-desc { font-size: 11px; color: var(--text-secondary); margin-top: 3px; line-height: 1.5; }
+    .infra-bottom { display: grid; grid-template-columns: repeat(3, 1fr); background: var(--bg-secondary); }
+    .infra-market {
+      padding: 1.1rem 1.25rem; text-align: center;
+      border-right: 0.5px solid var(--border);
+    }
+    .infra-market:last-child { border-right: none; }
+    .infra-market-name { font-size: 14px; font-weight: 600; }
+    .infra-market-sub { font-size: 11px; color: var(--text-secondary); margin-top: 3px; }
+
+    /* ── Verticals ── */
+    .vertical-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 16px; margin-top: 2.25rem;
+    }
+    .vertical-card {
+      border: 0.5px solid var(--border-strong);
+      border-radius: var(--radius-lg); overflow: hidden;
+    }
+    .vertical-header { padding: 1.5rem; border-bottom: 0.5px solid var(--border); }
+    .vtag {
+      font-size: 11px; font-weight: 600; padding: 3px 10px;
+      border-radius: 20px; display: inline-block; margin-bottom: 0.75rem;
+    }
+    .vtag-health { background: var(--purple-light); color: var(--purple-dark); }
+    .vtag-edtech { background: var(--purple-pale); color: var(--purple-mid); }
+    .vtag-work { background: var(--gold-light); color: var(--gold-dark); }
+    .vertical-name { font-size: 17px; font-weight: 600; margin-bottom: 5px; }
+    .vertical-pitch { font-size: 13px; color: var(--text-secondary); line-height: 1.55; }
+    .v-stat { font-size: 26px; font-weight: 600; margin-top: 1rem; }
+    .v-stat-health { color: var(--purple-dark); }
+    .v-stat-edtech { color: var(--purple-mid); }
+    .v-stat-work { color: var(--gold-dark); }
+    .v-stat-label { font-size: 11px; color: var(--text-secondary); margin-top: 2px; }
+    .vertical-body { padding: 1.25rem; }
+    .vrow {
+      display: flex; gap: 8px; align-items: flex-start;
+      font-size: 13px; color: var(--text-secondary); line-height: 1.5;
+      margin-bottom: 10px;
+    }
+    .vrow:last-child { margin-bottom: 0; }
+    .vdot {
+      width: 5px; height: 5px; border-radius: 50%;
+      flex-shrink: 0; margin-top: 7px;
+    }
+    .vdot-health { background: var(--purple-mid); }
+    .vdot-edtech { background: var(--purple-mid); }
+    .vdot-work { background: var(--gold-dark); }
+
+    /* ── Architecture ── */
+    .arch-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px; margin-top: 2.25rem;
+    }
+    .arch-card {
+      background: var(--bg-secondary); border-radius: var(--radius-md);
+      padding: 1.25rem; border: 0.5px solid var(--border);
+    }
+    .arch-name { font-size: 14px; font-weight: 600; margin-bottom: 5px; }
+    .arch-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.55; }
+    .arch-tag {
+      display: inline-block; margin-top: 8px;
+      font-size: 10px; font-weight: 600; color: var(--purple-mid);
+      background: var(--purple-light); padding: 2px 8px; border-radius: 20px;
+    }
+
+    /* ── Anti-Dependency ── */
+    .memo-block {
+      background: var(--gold-light); border: 0.5px solid var(--gold-dark);
+      border-left: 3px solid var(--gold-dark);
+      border-radius: var(--radius-md); padding: 1.5rem 1.75rem;
+      margin: 2.25rem 0;
+    }
+    .memo-label { font-size: 11px; font-weight: 600; color: var(--gold-dark); letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 0.6rem; }
+    .memo-quote { font-size: 18px; font-weight: 600; color: var(--purple-deep); line-height: 1.4; margin-bottom: 0.6rem; font-style: italic; }
+    .memo-attr { font-size: 12px; color: var(--text-secondary); line-height: 1.55; }
+
+    .ada-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px; margin-bottom: 2rem;
+    }
+    .ada-card {
+      background: var(--bg-secondary); border: 0.5px solid var(--border);
+      border-radius: var(--radius-md); padding: 1.25rem;
+    }
+    .ada-num { font-size: 11px; font-weight: 700; color: var(--text-tertiary); letter-spacing: 1px; margin-bottom: 0.5rem; }
+    .ada-name { font-size: 14px; font-weight: 600; margin-bottom: 5px; }
+    .ada-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.55; margin-bottom: 0.5rem; }
+
+    .ada-contrast {
+      display: grid; grid-template-columns: 1fr 1px 1fr; gap: 0;
+      border: 0.5px solid var(--border-strong); border-radius: var(--radius-lg); overflow: hidden;
+    }
+    .ada-contrast-col { padding: 1.5rem; }
+    .ada-contrast-col:first-child { background: var(--bg-secondary); }
+    .ada-contrast-col:last-child { background: var(--purple-pale); }
+    .ada-contrast-divider { background: var(--border-strong); width: 0.5px; }
+    .ada-contrast-label { font-size: 12px; font-weight: 700; margin-bottom: 1rem; letter-spacing: 0.2px; }
+    .ada-contrast-bad { color: var(--text-tertiary); }
+    .ada-contrast-good { color: var(--purple-mid); }
+    .ada-contrast-item { font-size: 13px; color: var(--text-secondary); padding: 5px 0; border-bottom: 0.5px solid var(--border); }
+    .ada-contrast-item:last-child { border-bottom: none; }
+    .ada-contrast-item-good { color: var(--text-primary); }
+
+    /* ── Escalation ── */
+    .escalation-flow { margin: 2.25rem 0; display: flex; flex-direction: column; }
+    .esc-step { display: flex; gap: 1.25rem; align-items: flex-start; }
+    .esc-num {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--purple-dark); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 600; flex-shrink: 0;
+    }
+    .esc-content { padding-bottom: 0.5rem; flex: 1; }
+    .esc-title { font-size: 15px; font-weight: 600; margin-bottom: 5px; margin-top: 6px; }
+    .esc-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.65; }
+    .esc-desc em { font-style: normal; font-weight: 600; color: var(--text-primary); }
+    .esc-connector {
+      width: 1px; height: 28px; background: var(--border-strong);
+      margin-left: 18px; margin: 6px 0 6px 17px;
+    }
+    .esc-callout {
+      background: var(--purple-light); border-left: 3px solid var(--purple-dark);
+      border-radius: var(--radius-md); padding: 1.1rem 1.5rem;
+      font-size: 14px; font-weight: 500; color: var(--purple-dark); line-height: 1.6;
+    }
+
+    /* ── FAME ── */
+    .fame-block {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem;
+      background: var(--bg-secondary); border: 0.5px solid var(--border);
+      border-radius: var(--radius-lg); padding: 2rem; margin-top: 2.25rem;
+    }
+    .fame-stats { display: flex; flex-direction: column; gap: 1.25rem; }
+    .fame-num { font-size: 24px; font-weight: 600; color: var(--purple-dark); }
+    .fame-label { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+    .fame-bullets { display: flex; flex-direction: column; gap: 10px; }
+    .fame-bullet {
+      display: flex; gap: 10px; align-items: flex-start;
+      font-size: 13px; color: var(--text-secondary); line-height: 1.55;
+    }
+    .fame-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: var(--purple-dark); flex-shrink: 0; margin-top: 7px;
+    }
+
+    /* ── Traction ── */
+    .traction-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px; margin-top: 2.25rem;
+    }
+    .traction-card {
+      display: flex; gap: 12px; align-items: flex-start;
+      padding: 1.1rem 1.25rem;
+      border: 0.5px solid var(--border-strong);
+      border-radius: var(--radius-md); background: var(--bg);
+    }
+    .traction-icon {
+      width: 34px; height: 34px; border-radius: var(--radius-sm);
+      background: var(--gold-light); color: var(--gold-dark);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px; flex-shrink: 0;
+    }
+    .traction-title { font-size: 13px; font-weight: 600; }
+    .traction-sub { font-size: 12px; color: var(--text-secondary); margin-top: 3px; line-height: 1.45; }
+
+    /* ── Origin & Dedication ── */
+    .bio-block {
+      border: 0.5px solid var(--border-strong);
+      border-radius: var(--radius-lg); overflow: hidden;
+      margin-top: 3rem;
+    }
+    .bio-header {
+      display: flex; align-items: flex-start; gap: 1rem;
+      padding: 1.5rem 1.75rem; border-bottom: 0.5px solid var(--border);
+      background: var(--bg-secondary);
+    }
+    .bio-creds { font-size: 12px; color: var(--text-tertiary); margin-top: 4px; }
+    .bio-body { padding: 1.75rem; }
+    .bio-body p {
+      font-size: 14px; color: var(--text-secondary); line-height: 1.8;
+      margin-bottom: 1.1rem;
+    }
+    .bio-body p:last-child { margin-bottom: 0; }
+
+    .sarajevo-block {
+      margin: 0; padding: 1.5rem 1.75rem;
+      background: #1A1025; border-top: 0.5px solid #333; border-bottom: 0.5px solid #333;
+    }
+    .sarajevo-year {
+      font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: rgba(255,255,255,0.45);
+      margin-bottom: 0.85rem;
+    }
+    .sarajevo-block p {
+      font-size: 14px; color: rgba(255,255,255,0.78); line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+    .sarajevo-block p:last-child { margin-bottom: 0; }
+
+    .coherence-block {
+      padding: 1.5rem 1.75rem;
+      background: var(--purple-pale);
+      border-top: 0.5px solid var(--border);
+    }
+    .coherence-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.8px;
+      text-transform: uppercase; color: var(--gold-dark);
+      margin-bottom: 0.85rem;
+    }
+    .coherence-block p {
+      font-size: 14px; color: var(--text-secondary); line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+    .coherence-block p:last-child {
+      margin-bottom: 0; font-weight: 500;
+      color: var(--purple-dark); font-style: italic;
+    }
+
+    .dedication-block {
+      border: 0.5px solid var(--border-strong);
+      border-radius: var(--radius-lg); overflow: hidden;
+      margin-top: 3rem;
+    }
+    .ded-header {
+      background: var(--purple-dark); color: rgba(255,255,255,0.65);
+      font-size: 11px; font-weight: 600; letter-spacing: 1px;
+      text-transform: uppercase; padding: 0.85rem 1.75rem;
+    }
+    .ded-person { padding: 1.75rem; }
+    .ded-name { font-size: 18px; font-weight: 600; margin-bottom: 3px; letter-spacing: -0.3px; }
+    .ded-dates { font-size: 14px; font-weight: 400; color: var(--text-secondary); }
+    .ded-title { font-size: 13px; color: var(--purple-mid); font-weight: 500; margin-bottom: 0.85rem; }
+    .ded-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.75; }
+    .ded-divider { height: 0.5px; background: var(--border); margin: 0 1.75rem; }
+    .ded-closing {
+      background: var(--bg-secondary); padding: 1.5rem 1.75rem;
+      font-size: 14px; color: var(--text-primary); line-height: 1.8;
+      border-top: 0.5px solid var(--border); font-style: italic;
+    }
+
+    /* ── Team ── */
+    .team-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px; margin-top: 2.25rem;
+    }
+    .team-card {
+      border: 0.5px solid var(--border-strong);
+      border-radius: var(--radius-lg); padding: 1.5rem; background: var(--bg);
+    }
+    .team-av {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--gold-light); color: var(--gold-dark);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 600; margin-bottom: 1rem;
+    }
+    .team-name { font-size: 16px; font-weight: 600; }
+    .team-role { font-size: 13px; color: var(--text-secondary); margin-top: 2px; }
+    .team-bio {
+      font-size: 13px; color: var(--text-secondary);
+      margin-top: 12px; padding-top: 12px;
+      border-top: 0.5px solid var(--border); line-height: 1.65;
+    }
+
+    /* ── CTA ── */
+    .cta-wrap { padding: 0 2rem 5rem; }
+    .cta {
+      background: var(--purple-dark); border-radius: var(--radius-lg);
+      padding: 4rem 2rem; text-align: center; max-width: 900px; margin: 0 auto;
+    }
+    .cta h2 { color: #fff; font-size: 30px; margin-bottom: 0.75rem; }
+    .cta p { color: rgba(255,255,255,0.68); font-size: 16px; max-width: 460px; margin: 0 auto 2.25rem; line-height: 1.65; }
+    .btn-white {
+      background: #fff; color: var(--purple-dark); border: none;
+      border-radius: var(--radius-sm); padding: 12px 26px;
+      font-size: 15px; font-weight: 600; cursor: pointer; text-decoration: none;
+      display: inline-block;
+    }
+    .btn-white:hover { background: #ede8f8; }
+
+    /* ── Footer ── */
+    footer {
+      padding: 1.5rem 2rem; border-top: 0.5px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 8px;
+    }
+    .footer-copy { font-size: 12px; color: var(--text-tertiary); }
+    .footer-links { display: flex; gap: 1.25rem; }
+    .footer-links a { font-size: 12px; color: var(--text-tertiary); text-decoration: none; }
+    .footer-links a:hover { color: var(--text-primary); }
+
+    /* ── Responsive ── */
+    @media (max-width: 700px) {
+      .hero h1 { font-size: 34px; letter-spacing: -1px; }
+      nav { padding: 0 1rem; }
+      .nav-links a { display: none; }
+      section { padding: 3.5rem 1.25rem; }
+      .infra-mid, .infra-bottom { grid-template-columns: 1fr; }
+      .infra-layer { border-right: none; border-bottom: 0.5px solid var(--border); }
+      .infra-market { border-right: none; border-bottom: 0.5px solid var(--border); }
+      .infra-market:last-child { border-bottom: none; }
+      .fame-block { grid-template-columns: 1fr; gap: 1.5rem; }
+      .cta-wrap { padding: 0 1.25rem 4rem; }
+      .ada-contrast { grid-template-columns: 1fr; }
+      .ada-contrast-divider { width: 100%; height: 0.5px; }
+      footer { flex-direction: column; align-items: flex-start; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav>
+  <a href="#" class="logo">Kno<em>Me</em><sub>.tech</sub></a>
+  <div class="nav-links">
+    <a href="#markets">Markets</a>
+    <a href="#architecture">Architecture</a>
+    <a href="#anti-dependency">Anti-Dependency</a>
+    <a href="#about">About</a>
+    <a href="#traction">Traction</a>
+    <a href="mailto:hello@knome.tech" class="btn-nav">Request deck →</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-badge">Patent-Pending · USPTO App. No. 64/081,735 · June 3, 2026</div>
+  <div class="hero-tagline">Health &nbsp;·&nbsp; Learning &nbsp;·&nbsp; Sovereign Data</div>
+  <h1>Sovereign data infrastructure<br>for <em>health, education,</em> and <em>work.</em></h1>
+  <p class="lead">KnoMe is the consent layer the internet was always missing — a family-owned data pod that travels with the person across every institution, never held hostage by any of them.</p>
+  <div class="hero-actions">
+    <a href="mailto:hello@knome.tech" class="btn-primary">Request investor deck →</a>
+    <a href="#markets" class="btn-secondary">Explore the platform</a>
+  </div>
+  <p class="hero-domain"><em>The data serves the person. By design. By patent.</em></p>
+</section>
+
+<hr>
+
+<!-- Infrastructure -->
+<section>
+  <div class="container">
+    <p class="eyebrow">The infrastructure layer</p>
+    <h2>One platform. Three sovereign markets.</h2>
+    <p class="lead">KnoMe is not an app. It is infrastructure — the cryptographic consent and data sovereignty layer beneath health records, academic credentials, and employer benefits. Each market runs on the same core: SOLID pods, Fluree consent ledger, and the Human Guardian Module.</p>
+
+    <div class="infra-wrap">
+      <div class="infra-top">
+        <div class="infra-top-title">KnoMe Sovereign Data Infrastructure</div>
+        <div class="infra-top-sub">SOLID pods · Fluree consent ledger · Human Guardian Module · W3C Verifiable Credentials · HL7 FHIR</div>
+      </div>
+      <div class="infra-mid">
+        <div class="infra-layer">
+          <div class="infra-layer-name">Family-owned data pod</div>
+          <div class="infra-layer-desc">Zero sensitive data on KnoMe servers — only encrypted access pointers</div>
+        </div>
+        <div class="infra-layer">
+          <div class="infra-layer-name">Cryptographic consent ledger</div>
+          <div class="infra-layer-desc">Tamper-evident audit chain. Every access event on-record.</div>
+        </div>
+        <div class="infra-layer">
+          <div class="infra-layer-name">Human Guardian Module</div>
+          <div class="infra-layer-desc">Licensed professionals in the loop. AI outputs reviewed by humans.</div>
+        </div>
+      </div>
+      <div class="infra-bottom">
+        <div class="infra-market">
+          <div class="infra-market-name" style="color: var(--purple-dark);">KnoMe Health</div>
+          <div class="infra-market-sub">Decentralized personal health record</div>
+        </div>
+        <div class="infra-market">
+          <div class="infra-market-name" style="color: var(--purple-mid);">KnoMe EdTech</div>
+          <div class="infra-market-sub">Student sovereignty · Child Success Passport</div>
+        </div>
+        <div class="infra-market">
+          <div class="infra-market-name" style="color: var(--gold-dark);">KnoMe@Work</div>
+          <div class="infra-market-sub">Employer health · MIURA incentive architecture</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<!-- Verticals -->
+<section id="markets">
+  <div class="container">
+    <p class="eyebrow">Three markets</p>
+    <h2>Same architecture. Market-specific depth.</h2>
+    <p class="lead">Each vertical addresses a broken data relationship — between patient and provider, student and institution, employee and insurer. KnoMe inverts all three: the person owns the record, and institutions earn access.</p>
+
+    <div class="vertical-grid">
+
+      <div class="vertical-card">
+        <div class="vertical-header">
+          <span class="vtag vtag-health">KnoMe Health</span>
+          <div class="vertical-name">Decentralized personal health record</div>
+          <div class="vertical-pitch">The patient owns their complete longitudinal health record — not the hospital, not the insurer, not the EHR vendor.</div>
+          <div class="v-stat v-stat-health">$4.5T</div>
+          <div class="v-stat-label">US healthcare spend, majority employer-sponsored self-insured</div>
+        </div>
+        <div class="vertical-body">
+          <div class="vrow"><span class="vdot vdot-health"></span>HL7 FHIR interoperability across all providers and payers</div>
+          <div class="vrow"><span class="vdot vdot-health"></span>Bankruptcy firewall: 23andMe scenario architecturally impossible (Claim 9)</div>
+          <div class="vrow"><span class="vdot vdot-health"></span>Providers join free — only when the patient extends an invitation</div>
+        </div>
+      </div>
+
+      <div class="vertical-card">
+        <div class="vertical-header">
+          <span class="vtag vtag-edtech">KnoMe EdTech</span>
+          <div class="vertical-name">Student sovereignty & the Child Success Passport</div>
+          <div class="vertical-pitch">A portable, family-owned credential spanning K–12 and beyond — academic, health, and social-emotional — no institution holds the master record.</div>
+          <div class="v-stat v-stat-edtech">60M+</div>
+          <div class="v-stat-label">US K–12 students with no sovereign record of their own journey</div>
+        </div>
+        <div class="vertical-body">
+          <div class="vrow"><span class="vdot vdot-edtech"></span>Wellbeing Shift Indicator: early pre-crisis detection before institutions notice</div>
+          <div class="vrow"><span class="vdot vdot-edtech"></span>W3C Verifiable Credentials issued into the student's own pod</div>
+          <div class="vrow"><span class="vdot vdot-edtech"></span>FERPA/HIPAA honored structurally — not just contractually</div>
+        </div>
+      </div>
+
+      <div class="vertical-card">
+        <div class="vertical-header">
+          <span class="vtag vtag-work">KnoMe@Work</span>
+          <div class="vertical-name">Employer health sovereignty & MIURA</div>
+          <div class="vertical-pitch">Self-insured employers fund a new category: AI-Assisted Utilization Review by the Patient. Employees make better decisions; stop-loss premiums fund the incentives.</div>
+          <div class="v-stat v-stat-work">6M</div>
+          <div class="v-stat-label">Lives covered by Health Transformation Alliance jumbo employer members</div>
+        </div>
+        <div class="vertical-body">
+          <div class="vrow"><span class="vdot vdot-work"></span>MIURA: 3-tier incentive architecture — net employer cost zero or negative</div>
+          <div class="vrow"><span class="vdot vdot-work"></span>AIURP: novel category — utilization review by the patient, not the payer</div>
+          <div class="vrow"><span class="vdot vdot-work"></span>KPQS / CTRS: provider quality and contract transparency scoring</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<!-- Architecture -->
+<section id="architecture">
+  <div class="container">
+    <p class="eyebrow">Why it's defensible</p>
+    <h2>The moat is the architecture.</h2>
+    <p class="lead">KnoMe's competitive advantage is not a feature set — it is a structural impossibility. The platform cannot be compelled to sell, breach, or monetize family data because it doesn't hold any. This is patented at the claims level.</p>
+
+    <div class="arch-grid">
+      <div class="arch-card">
+        <div class="arch-name">SOLID pods (Inrupt)</div>
+        <div class="arch-desc">Tim Berners-Lee's data sovereignty standard. Each family owns a pod. KnoMe holds zero health, educational, or sacramental data — only encrypted access pointers.</div>
+        <span class="arch-tag">Claims 60–61</span>
+      </div>
+      <div class="arch-card">
+        <div class="arch-name">Fluree semantic ledger</div>
+        <div class="arch-desc">Semantic graph database embedded within each SOLID pod. Cryptographic consent chain. Every access event is tamper-evident and auditable by the family.</div>
+        <span class="arch-tag">Claims 60–61</span>
+      </div>
+      <div class="arch-card">
+        <div class="arch-name">Human Guardian Module</div>
+        <div class="arch-desc">Licensed professionals review AI outputs — mentors, counselors, physicians. Human discernment is in the loop by design, not by option. Core patent claim.</div>
+        <span class="arch-tag">Claims 1–4</span>
+      </div>
+      <div class="arch-card">
+        <div class="arch-name">W3C Verifiable Credentials</div>
+        <div class="arch-desc">Credentials issued into the person's own pod — academic, clinical, professional. Portable across institutions without vendor lock-in.</div>
+        <span class="arch-tag">Core architecture</span>
+      </div>
+      <div class="arch-card">
+        <div class="arch-name">Inverted access model</div>
+        <div class="arch-desc">Institutions and professionals access the platform free — but only when the student, patient, or employee initiates the invitation. Institution-triggered access is impossible.</div>
+        <span class="arch-tag">Claims 1–4</span>
+      </div>
+      <div class="arch-card">
+        <div class="arch-name">Bankruptcy firewall</div>
+        <div class="arch-desc">Three-mechanism structural protection. The 23andMe, BetterHelp, and Illuminate scenarios are architecturally impossible — not just contractually prohibited.</div>
+        <span class="arch-tag">Claim 9</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<!-- Anti-Dependency Architecture -->
+<section id="anti-dependency">
+  <div class="container">
+    <p class="eyebrow">Anti-Dependency Architecture</p>
+    <h2>AI that gets out of the way.</h2>
+    <p class="lead">While the rest of the AI industry competes to maximize engagement and time-on-platform, KnoMe is the first platform to patent the opposite: a structural requirement that the AI actively work to reduce dependency, build human capability, and hand off to real people.</p>
+
+    <div class="memo-block">
+      <div class="memo-label">The problem, in the industry's own words</div>
+      <div class="memo-quote">"We need to make users addicted to our AI tools."</div>
+      <div class="memo-attr">— Internal Microsoft memo, documented by Omar Shahine, Senior Engineering Leader<br>Publicly repudiated by Satya Nadella. Cited as prior art in KnoMe's patent filing.</div>
+    </div>
+
+    <div class="ada-grid">
+      <div class="ada-card">
+        <div class="ada-num">01</div>
+        <div class="ada-name">Dependency detection</div>
+        <div class="ada-desc">The platform monitors for over-reliance patterns — a student who stops seeking peer input, a patient who replaces clinical judgment with AI output. Detection triggers a structured response, not a nudge.</div>
+        <span class="arch-tag">Claims 69–81</span>
+      </div>
+      <div class="ada-card">
+        <div class="ada-num">02</div>
+        <div class="ada-name">Capability scaffolding</div>
+        <div class="ada-desc">AI responses are calibrated to build the user's own reasoning rather than replace it. The platform tracks whether a person's independent decision-making capacity is growing over time.</div>
+        <span class="arch-tag">Claims 69–81</span>
+      </div>
+      <div class="ada-card">
+        <div class="ada-num">03</div>
+        <div class="ada-name">Mandatory human handoff</div>
+        <div class="ada-desc">Beyond defined thresholds, AI escalation to a licensed human is not optional — it is architecturally enforced. The system cannot be configured to suppress it. This is the Human Guardian Module in its active form.</div>
+        <span class="arch-tag">Claims 1–4 · 69–81</span>
+      </div>
+    </div>
+
+    <div class="ada-contrast">
+      <div class="ada-contrast-col">
+        <div class="ada-contrast-label ada-contrast-bad">Every other AI platform</div>
+        <div class="ada-contrast-item">Optimizes for engagement time</div>
+        <div class="ada-contrast-item">Rewards continued AI use</div>
+        <div class="ada-contrast-item">Human escalation is optional / hidden</div>
+        <div class="ada-contrast-item">No structural limit on AI dependency</div>
+      </div>
+      <div class="ada-contrast-divider"></div>
+      <div class="ada-contrast-col">
+        <div class="ada-contrast-label ada-contrast-good">KnoMe Anti-Dependency Architecture</div>
+        <div class="ada-contrast-item ada-contrast-item-good">Optimizes for human capability growth</div>
+        <div class="ada-contrast-item ada-contrast-item-good">Rewards reduced AI reliance over time</div>
+        <div class="ada-contrast-item ada-contrast-item-good">Human escalation is architecturally enforced</div>
+        <div class="ada-contrast-item ada-contrast-item-good">Dependency triggers automatic intervention</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<!-- Human-in-the-Loop Escalation Framework -->
+<section id="escalation">
+  <div class="container">
+    <p class="eyebrow">Human-in-the-Loop Escalation</p>
+    <h2>The student calls for help. The platform delivers a human.</h2>
+    <p class="lead">The Wellbeing Shift Indicator detects early behavioral change. The Human Guardian Module ensures a licensed professional responds. The escalation path is student-initiated, privacy-preserving, and structurally guaranteed — not dependent on an institution noticing.</p>
+
+    <div class="escalation-flow">
+      <div class="esc-step">
+        <div class="esc-num">1</div>
+        <div class="esc-content">
+          <div class="esc-title">Wellbeing Shift Indicator fires</div>
+          <div class="esc-desc">The WSI detects a pattern shift in a previously high-performing student — withdrawal, disengagement, changed response cadence — without any change in cognitive markers. The system flags a pre-crisis condition before any institution has noticed.</div>
+        </div>
+      </div>
+      <div class="esc-connector"></div>
+      <div class="esc-step">
+        <div class="esc-num">2</div>
+        <div class="esc-content">
+          <div class="esc-title">Student initiates outreach</div>
+          <div class="esc-desc">The escalation is <em>always</em> student-initiated. KnoMe surfaces a private, consent-gated prompt — not a report to the school, not a flag on a dashboard visible to administrators. The student chooses whether to reach out and to whom.</div>
+        </div>
+      </div>
+      <div class="esc-connector"></div>
+      <div class="esc-step">
+        <div class="esc-num">3</div>
+        <div class="esc-content">
+          <div class="esc-title">Human Guardian Module activates</div>
+          <div class="esc-desc">A licensed mentor, counselor, or clinician — already in the student's trusted network — receives a structured, consent-scoped notification. They see only what the student has authorized. AI outputs are reviewed; the human responds directly.</div>
+        </div>
+      </div>
+      <div class="esc-connector"></div>
+      <div class="esc-step">
+        <div class="esc-num">4</div>
+        <div class="esc-content">
+          <div class="esc-title">Longitudinal feedback loop closes</div>
+          <div class="esc-desc">The interaction is recorded in the student's sovereign pod — not in the institution's system. The family retains the full history. Future risk scoring improves. The community feedback loop, designed by co-inventor John I. Ford, learns across the family network without centralizing the data.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="esc-callout">
+      This is not a crisis hotline. It is a pre-crisis architecture — designed to catch the student who goes quiet before anyone else would think to look.
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<!-- FAME EU Pilot -->
+<section>
+  <div class="container">
+    <p class="eyebrow">EU pilot</p>
+    <h2>FAME — proving the model in Kosovo.</h2>
+    <p class="lead">FAME (Future Albanian Minds Empowered) is KnoMe's EU-based pilot deployment — running the full sovereign infrastructure stack with K–12 students in Kosovo. It is the first proof point that the architecture works at ground level in a non-US regulatory environment, and the template for country-scale sovereign data utilities worldwide.</p>
+
+    <div class="fame-block">
+      <div class="fame-stats">
+        <div>
+          <div class="fame-num">Kosovo</div>
+          <div class="fame-label">First country deployment · live pilot underway</div>
+        </div>
+        <div>
+          <div class="fame-num">ASU TLN</div>
+          <div class="fame-label">Arizona State University Trusted Learner Network · STTR pathway confirmed</div>
+        </div>
+        <div>
+          <div class="fame-num">EU Horizon</div>
+          <div class="fame-label">Active funding pathway · digital youth mental health call</div>
+        </div>
+      </div>
+      <div class="fame-bullets">
+        <div class="fame-bullet"><div class="fame-dot"></div>Modeled on Belgium's Athumi national data utility — designed to scale to country-level sovereign infrastructure</div>
+        <div class="fame-bullet"><div class="fame-dot"></div>Inrupt SOLID infrastructure · University of Prishtina · Faculty of Medicine partnership</div>
+        <div class="fame-bullet"><div class="fame-dot"></div>GDPR-native by architecture — EU AI Act compliance by default</div>
+        <div class="fame-bullet"><div class="fame-dot"></div>Behar Shala (K-8 school director, Dragash) and Alejtin Berisha (CEO Universum/ASU Kosovo) confirmed as co-founders</div>
+        <div class="fame-bullet"><div class="fame-dot"></div>Each country gets its own operating company — KnoMe licenses IP, inculturation required as a condition</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<!-- Traction -->
+<section id="traction">
+  <div class="container">
+    <p class="eyebrow">Traction</p>
+    <h2>Validation from people who matter.</h2>
+    <div class="traction-grid">
+      <div class="traction-card">
+        <div class="traction-icon">⚖</div>
+        <div>
+          <div class="traction-title">USPTO provisional filed</div>
+          <div class="traction-sub">68 claims · App. No. 64/081,735 · June 3, 2026 · Micro-entity</div>
+        </div>
+      </div>
+      <div class="traction-card">
+        <div class="traction-icon">🏛</div>
+        <div>
+          <div class="traction-title">John Bruce, CEO Inrupt</div>
+          <div class="traction-sub">Boston meeting completed · SOLID infrastructure partnership active</div>
+        </div>
+      </div>
+      <div class="traction-card">
+        <div class="traction-icon">⚕</div>
+        <div>
+          <div class="traction-title">Dr. Paul Patterson MD PhD FAAP</div>
+          <div class="traction-sub">Pathfinder Health / Walter Reed · Personal email secured · CEO call pending</div>
+        </div>
+      </div>
+      <div class="traction-card">
+        <div class="traction-icon">🎓</div>
+        <div>
+          <div class="traction-title">ASU / Kate Giovacchini</div>
+          <div class="traction-sub">Trusted Learner Network · STTR university research pathway confirmed</div>
+        </div>
+      </div>
+      <div class="traction-card">
+        <div class="traction-icon">🌍</div>
+        <div>
+          <div class="traction-title">Kosovo pilot active</div>
+          <div class="traction-sub">Behar Shala · University of Prishtina · EU Horizon funding pathway open</div>
+        </div>
+      </div>
+      <div class="traction-card">
+        <div class="traction-icon">⚡</div>
+        <div>
+          <div class="traction-title">Sprint 1 codebase complete</div>
+          <div class="traction-sub">Next.js · SOLID pods · Fluree ledger · Consent engine · Cryptographic audit chain</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- About / Origin / Dedication -->
+<section id="about">
+  <div class="container">
+
+    <p class="eyebrow">The origin</p>
+    <h2>KnoMe did not begin in 2024.</h2>
+    <p class="lead">It began in a free clinic in Maricopa, Arizona, where a physician drove out to give polio vaccinations to migrant farmworkers who could not pay — and came back the next month, and the month after that, for years.</p>
+
+    <!-- Dedication -->
+    <div class="dedication-block">
+      <div class="ded-header">In memory &amp; in honor</div>
+      <div class="ded-person">
+        <div class="ded-name">Dr. William H. Ford <span class="ded-dates">1924 – 2001</span></div>
+        <div class="ded-title">Family physician · Casa Grande, Arizona · 1954–1993</div>
+        <div class="ded-desc">Army medic in England during World War II. Delivered the majority of babies born in the Casa Grande area over four decades. Built the new hospital. Ran a free clinic for migrant workers. Traveled to administer free polio vaccinations. Volunteered monthly at the Arizona Training Program in Coolidge. Served on the governor's board for aging and on the developmental board for Arizona's Medicaid system. Served on the city council. He died March 21, 2001, at 76. He was the inventor's uncle and hero.</div>
+      </div>
+      <div class="ded-divider"></div>
+      <div class="ded-person">
+        <div class="ded-name">Dr. Michael Fallon &amp; Dr. John Fallon</div>
+        <div class="ded-title">Founders · The Fallon Clinic · Worcester, Massachusetts · est. 1929</div>
+        <div class="ded-desc">The first group medical practice in Central Massachusetts — founded on the conviction that physicians should organize as a team around the whole patient over time. Dr. John Fallon's mother was Ella Ford — the same Ford family line that produced Dr. William H. Ford. The clinic became Reliant Medical Group; the insurance branch became Fallon Health. The inventor is a cousin of Dr. John Fallon.</div>
+      </div>
+      <div class="ded-closing">
+        Ninety-seven years. Three generations of one family. One belief about what medicine owes the person it serves.<br><br>
+        KnoMe is the architecture Dr. William H. Ford would have wanted his patients to have — and the architecture the Fallon Clinic would have given its patients if the technology had existed in 1929.
+      </div>
+    </div>
+
+    <!-- Founder bio -->
+    <div class="bio-block">
+      <div class="bio-header">
+        <div class="team-av">JF</div>
+        <div>
+          <div class="team-name">Joseph Ford</div>
+          <div class="team-role">Founder &amp; Lead Inventor · Rowboats LLC · Boston, Massachusetts</div>
+          <div class="bio-creds">B.S. International Economics, Arizona State University &nbsp;·&nbsp; MBA, Boston College &nbsp;·&nbsp; M.A. Ethics, Providence College</div>
+        </div>
+      </div>
+      <div class="bio-body">
+        <p>I earned my B.S. at Arizona State University. I went on to complete an MBA at Boston College and an M.A. in Ethics at Providence College. For two years I worked at a medical ethics think tank — then affiliated with Aetna, CIGNA, and Willis Towers Watson — where I asked questions about the ethics of health data, the ownership of clinical information, and the responsibilities of institutions toward the people whose data they hold. Those questions never left me. They became, decades later, the philosophical architecture of what I built.</p>
+        <p>I spent years in healthcare and insurance — Aetna, CIGNA, Willis Towers Watson — working at the intersection of health data, institutional decision-making, and individual vulnerability. I then co-founded and ran Academy Learning, an innovative learning center in Sacramento, for ten years. That decade gave me a ground-level education in how children actually learn, where they get lost, and what the difference is between a system designed for institutional convenience and one designed for the child.</p>
+        <p>Before all of that — in 1982 and 1983 — I spent a formative year in Finland. It was the first of three visits I made to the former Soviet Union and its borderlands during the 1980s. Those years shaped how I understood what sovereignty means to people who have lived without it, and what education means in a culture that has had to fight for the right to teach its own children in its own language.</p>
+      </div>
+
+      <div class="sarajevo-block">
+        <div class="sarajevo-year">1989 — Sarajevo</div>
+        <p>I was traveling through the Balkans and Eastern Europe, headed toward a PhD in East Central European political economy. I was in Sarajevo when Slobodan Milosevic announced the rescission of Kosovo's constitutional autonomy. I watched residents stop in the street. The reaction was not political analysis. It was the physical shock that precedes grief — or war.</p>
+        <p>I did not fully understand what I was witnessing. I understood it better over the following decade as the wars Milosevic's announcement signaled unfolded across the region. What I saw in Sarajevo in 1989 did not leave me. It became part of the lens through which I later understood what education, mental health, and data sovereignty actually mean in societies where institutions have been used as instruments of suppression — and where the generation born after liberation carries, in their bodies and their families, the weight of what came before.</p>
+      </div>
+
+      <div class="bio-body">
+        <p>In 1989 — the same year I witnessed Milosevic's announcement in Sarajevo — Dr. Fatmir Sejdiu co-founded the Democratic Union of Kosovo in direct response to the same event. In 2003 he spent a semester at ASU. In 2006 he became President of Kosovo. He is identified as FAME's founding advisor; outreach is pending.</p>
+        <p>Between 1995 and 2000, Dr. Pamela Cantor led the Eastern European Child Abuse Project across the precise geopolitical corridor surrounding Kosovo. Her clinical work with traumatized children became the scientific foundation for Turnaround for Children — now integrated into ASU's Center for Whole-Child Education. The clinical line from Dr. Cantor's 1995 Balkans work runs directly to Prishtina in 2026, where I am building with the Kosovo child psychiatrists — Drs. Afërdita Goci-Uka and Mimoza Shahini — who provided emergency mental health services to the children Dr. Cantor was training professionals to serve. Dr. Goci-Uka made a vow during the 1999 NATO airstrikes — sheltering with her children in Prishtina — to become a child psychiatrist if she survived. She did.</p>
+        <p>My friend Behar Shala was fifteen years old when Kosovo was invaded in 1998. He is now the Director of multiple K-8 schools in Kosovo. His wife is a UK-certified special education teacher. They are not institutional partners in the conventional sense. They are the people who stayed, who built Kosovo's educational infrastructure from nothing, and who understand what is owed to the children growing up in what their generation survived. Behar is the Co-Founder and Executive Director of FAME.</p>
+      </div>
+
+      <div class="coherence-block">
+        <div class="coherence-label">On what is not coincidence</div>
+        <p>Finland. Sarajevo. A medical ethics think tank. Ten years in a learning center. Decades in healthcare watching institutions make decisions about people's most sensitive information with no accountability to the people whose information it was.</p>
+        <p>All of that built the architecture I filed a patent on in June 2026. Not because I planned it that way. Because the same questions kept surfacing in different forms, and eventually I had both the time and the tools to answer them.</p>
+        <p>KnoMe is the attempt to make that covenant technically enforceable.</p>
+      </div>
+    </div>
+
+    <!-- Co-inventor -->
+    <div class="team-grid" style="margin-top: 2rem;">
+      <div class="team-card">
+        <div class="team-av">JIF</div>
+        <div class="team-name">John I. Ford</div>
+        <div class="team-role">Co-Inventor</div>
+        <div class="team-bio">Architect of the longitudinal family and community feedback loop. Designed the proactive pre-crisis outreach philosophy — structurally embedded in the platform, not added as a feature. Core patent co-inventor.</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-wrap">
+  <div class="cta">
+    <h2>Let's talk.</h2>
+    <p>We're raising a seed round to complete the Kosovo pilot, file the non-provisional patent, and scale across all three market verticals.</p>
+    <a href="mailto:hello@knome.tech" class="btn-white">Request a conversation →</a>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-copy">© 2026 Rowboats LLC · All IP held by Rowboats LLC · knome.tech · Patent-Pending · USPTO App. No. 64/081,735</div>
+  <div class="footer-links">
+    <a href="#architecture">Architecture</a>
+    <a href="#anti-dependency">Anti-Dependency</a>
+    <a href="#markets">Markets</a>
+    <a href="mailto:hello@knome.tech">Contact</a>
+  </div>
+</footer>
+
+</body>
+</html>
